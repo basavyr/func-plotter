@@ -32,7 +32,7 @@ def main():
     int_trapezoidal = maths.Integration.trapezoidal(
         maths.Functions.e_x, (0, 1))
 
-    plotter.plot_func_integral(maths.Functions.e_x, (0, 1), 50)
+    plotter.plot_func_integral(maths.Functions.special_sin, (-25, 25), 1000)
 
 
 if __name__ == "__main__":
