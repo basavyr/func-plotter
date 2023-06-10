@@ -25,3 +25,13 @@ def sin_k_x(x: float, k: int) -> float:
     """
     arg = np.power(np.sin(x), k)
     return arg
+
+
+class Functions:
+    @staticmethod
+    def special_sin(x: float) -> float:
+        """
+        - a special mathematical function that uses the built-in math tools from the current module
+        """
+        func = squared(x)*sin_k_x(x, 3)
+        return func
