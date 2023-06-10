@@ -1,4 +1,5 @@
 import maths
+import plotter
 
 
 def func_evolution(func: maths.Functions, interval: tuple):
@@ -14,16 +15,22 @@ def func_evolution(func: maths.Functions, interval: tuple):
     print(
         f'Created the data set for the x-values; {x_data[0]}, {x_data[1]}, ...')
 
-    n_func = [func(x) for x in x_data]
+    y_data = [func(x) for x in x_data]
     print(
-        f'Generated {len(n_func)} numerical values for the function < {func} >')
+        f'Generated {len(y_data)} numerical values for the function < {func} >')
+
+    plotter.plot_data(x_data, y_data)
 
 
 def main():
     """
     - The main workflow of the application
     """
-    func_evolution(maths.Functions.special_sin, (0, 10))
+    # func_evolution(maths.Functions.special_sin, (0, 10))
+    int_13 = maths.Integration.simpson_13(maths.Functions.e_x, (0, 1))
+    int_38 = maths.Integration.simpson_38(maths.Functions.e_x, (0, 1))
+    print(int_13)
+    print(int_38)
 
 
 if __name__ == "__main__":
