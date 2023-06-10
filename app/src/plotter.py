@@ -39,12 +39,12 @@ def plot_func_integral(func: "maths.Functions", interval: tuple, precision: int)
 
     x_data = maths.np.linspace(a, b, precision)
 
-    # y_data = [func(x) for x in x_data]
+    y_data = [func(x) for x in x_data]
 
     int_data = [maths.integrate.quad(func, 0, x)[0] for x in x_data]
 
-    # plt.plot(x_data, y_data, '-r', label='f(x)')
-    plt.plot(x_data, int_data, '-r', label='int(f)')
+    plt.plot(x_data, y_data, '-b', label='f(x)')
+    plt.plot(x_data, int_data, '-r', label='int(f(x))')
     plt.legend(loc='best')
     plt.xlabel('x')
     plt.savefig(plot_name, dpi=300, bbox_inches='tight')
