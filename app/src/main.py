@@ -29,8 +29,11 @@ def main():
     # func_evolution(maths.Functions.special_sin, (0, 10))
     int_13 = maths.Integration.simpson_13(maths.Functions.e_x, (0, 1))
     int_38 = maths.Integration.simpson_38(maths.Functions.e_x, (0, 1))
+    int_trapezoidal = maths.Integration.trapezoidal(
+        maths.Functions.e_x, (0, 1))
     print(int_13)
     print(int_38)
+    print(int_trapezoidal)
 
 
 if __name__ == "__main__":

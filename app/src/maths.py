@@ -115,3 +115,25 @@ class Integration:
         simpson_term = sum1+3*sum2+3*sum3+sum4
 
         return simpson_term*3*step/8
+
+    @staticmethod
+    def trapezoidal(func: 'Functions', interval: tuple) -> float:
+        """
+        - uses the trapezoidal method to integrate a function over a given interval
+        """
+        a, b = interval
+
+        step = np.abs((b-a)/Integration.N_INTERVALS)
+
+        f_a = func(a)
+        f_b = func(b)
+
+        sum_i = 0
+        for i in range(1, Integration.N_INTERVALS):
+            x_i = a+step*i
+            f_x = func(x_i)
+            sum_i += f_x
+
+        trapezoidal_term = f_a+2*sum_i+f_b
+
+        return trapezoidal_term*step/2
