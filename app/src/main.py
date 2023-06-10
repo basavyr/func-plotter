@@ -31,9 +31,8 @@ def main():
     int_38 = maths.Integration.simpson_38(maths.Functions.e_x, (0, 1))
     int_trapezoidal = maths.Integration.trapezoidal(
         maths.Functions.e_x, (0, 1))
-    print(int_13)
-    print(int_38)
-    print(int_trapezoidal)
+
+    plotter.plot_func_integral(maths.Functions.e_x, (0, 1), 50)
 
 
 if __name__ == "__main__":
