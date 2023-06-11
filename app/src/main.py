@@ -38,7 +38,7 @@ def main():
         maths.Functions.special_sin, (0, 10))
     plotter.plot_tuple(integration_tuple)
 
-    maths.Diffs.runge_kutta_4(maths.Functions.e_x, 0.5, (0, 2))
+    maths.Diffs.runge_kutta_4(maths.Functions.yp_t_y, 0.5, (0, 2))
 
 
 if __name__ == "__main__":

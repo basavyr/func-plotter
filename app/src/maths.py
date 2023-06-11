@@ -47,6 +47,14 @@ class Functions:
         exp = np.exp(x)
         return exp
 
+    @staticmethod
+    def yp_t_y(t: float, y: float) -> float:
+        """
+        - expression for a differential equation y'=f(t,y), where y=y(t)
+        """
+        yp = y-np.power(t, 2)+1
+        return yp
+
 
 class Diffs:
     """
@@ -55,13 +63,13 @@ class Diffs:
     N_INTERVALS = 5
 
     @staticmethod
-    def runge_kutta_4(func: "Functions", alpha: float, interval: tuple) -> float:
+    def runge_kutta_4(func: "Functions", alpha: float, interval: tuple) -> "list[float]":
         """
         - numerical implementation for the Runge-Kutta method of order 4
         - requires an initial value for the function `func` at x=x_0, here denoted by `alpha`
         - the interval starts at x_0=a and ends at x_n=b
         """
-        debug = True
+        debug = False
 
         a, b = interval
 
@@ -74,23 +82,26 @@ class Diffs:
         if debug:
             print(f'Using a step size h={step}')
 
+        t_values = []
         w_values = []
 
         for idx in range(len(x_data)):
-            # this is for the step x=x_0=a
             if idx == 0:
-                t_i = x_data[0]
-                w_i = alpha
-                w_values.append(w_i)
-            # this is for the other values of x over the interval [a,b]
+                t_0 = x_data[0]
+                w_0 = alpha
+                t_values.append(t_0)
+                w_values.append(w_0)
             else:
                 t_i = x_data[idx]
-                w_i = w_values[idx-1]+1
+                k_1 = step*func(t_values[idx-1], w_values[idx-1])
+                k_2 = step*func(t_values[idx-1]+step/2, w_values[idx-1]+k_1/2)
+                k_3 = step*func(t_values[idx-1]+step/2, w_values[idx-1]+k_2/2)
+                k_4 = step*func(t_values[idx-1]+step, w_values[idx-1]+k_3)
+                w_i = w_values[idx-1]+(k_1 + 2*k_2 + 2*k_3 + k_4) / 6
+                t_values.append(t_i)
                 w_values.append(w_i)
 
-        print(w_values)
-
-        return 0.1
+        return w_values
 
 
 class Integration:
