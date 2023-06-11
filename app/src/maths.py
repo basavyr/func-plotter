@@ -61,6 +61,47 @@ class Diffs:
     - A class that contains different implementation for numerical differentiation
     """
     N_INTERVALS = 5
+    H_STEP = 0.01
+
+    @staticmethod
+    def df1_x(func: "Functions", arg: float) -> float:
+        """
+        - uses the Richardson extrapolation to determine the first order derivative of a function func(x)
+        """
+        x = arg
+        f_h = func(x+Diffs.H_STEP)
+        f_2h = func(x+2*Diffs.H_STEP)
+        f_mh = func(x-Diffs.H_STEP)
+        f_m2h = func(x-2*Diffs.H_STEP)
+
+        return (-f_2h+8.0*f_h-8.0*f_mh+f_m2h)/(12.0*Diffs.H_STEP)
+
+    @staticmethod
+    def df2_x(func: "Functions", arg: float) -> float:
+        """
+        - uses the five-point formula to determine the second order derivative of a function func(x)
+        """
+        x = arg
+        f_x = func(x)
+        f_h = func(x+Diffs.H_STEP)
+        f_2h = func(x+2*Diffs.H_STEP)
+        f_mh = func(x-Diffs.H_STEP)
+        f_m2h = func(x-2*Diffs.H_STEP)
+
+        return (-f_2h+16.0*f_h-30.0*f_x+16.0*f_mh-f_m2h)/(12.0*np.power(Diffs.H_STEP, 2))
+
+    @staticmethod
+    def df3_x(func: "Functions", arg: float) -> float:
+        """
+        - uses the five-point formula to determine the third order derivative of a function func(x)
+        """
+        x = arg
+        f_h = func(x+Diffs.H_STEP)
+        f_2h = func(x+2.0*Diffs.H_STEP)
+        f_mh = func(x-Diffs.H_STEP)
+        f_m2h = func(x-2.0*Diffs.H_STEP)
+
+        return (f_2h-2.0*f_h+2.0*f_mh-f_m2h)/(2.0*np.power(Diffs.H_STEP, 3))
 
     @staticmethod
     def runge_kutta_4(func: "Functions", alpha: float, interval: tuple) -> "list[float]":
@@ -227,3 +268,15 @@ class Integration:
                 f'Generated the set of numerical values for the integral: {len(int_data)}')
 
         return x_data, y_data, int_data
+
+
+class Utils:
+    """
+    - a collection of useful Mathematical tools that can be performed on functions with multiple arguments
+    """
+    @staticmethod
+    def taylor_series(func: "Functions", x_0: float) -> float:
+        """
+        - evaluates the Taylor series expansion, up to 4th order for a function `func`
+        """
+        return 1
