@@ -64,7 +64,7 @@ class Diffs:
     H_STEP = 0.01
 
     @staticmethod
-    def df1_x(func: "Functions", arg: float) -> float:
+    def d1f_x(func: "Functions", arg: float) -> float:
         """
         - uses the Richardson extrapolation to determine the first order derivative of a function func(x)
         """
@@ -77,7 +77,7 @@ class Diffs:
         return (-f_2h+8.0*f_h-8.0*f_mh+f_m2h)/(12.0*Diffs.H_STEP)
 
     @staticmethod
-    def df2_x(func: "Functions", arg: float) -> float:
+    def d2f_x(func: "Functions", arg: float) -> float:
         """
         - uses the five-point formula to determine the second order derivative of a function func(x)
         """
@@ -91,7 +91,7 @@ class Diffs:
         return (-f_2h+16.0*f_h-30.0*f_x+16.0*f_mh-f_m2h)/(12.0*np.power(Diffs.H_STEP, 2))
 
     @staticmethod
-    def df3_x(func: "Functions", arg: float) -> float:
+    def d3f_x(func: "Functions", arg: float) -> float:
         """
         - uses the five-point formula to determine the third order derivative of a function func(x)
         """
@@ -102,6 +102,20 @@ class Diffs:
         f_m2h = func(x-2.0*Diffs.H_STEP)
 
         return (f_2h-2.0*f_h+2.0*f_mh-f_m2h)/(2.0*np.power(Diffs.H_STEP, 3))
+
+    @staticmethod
+    def d4f_x(func: "Functions", arg: float) -> float:
+        """
+        - uses the five-point formula to determine the fourth order derivative of a function func(x)
+        """
+        x = arg
+        f_x = func(x)
+        f_h = func(x+Diffs.H_STEP)
+        f_2h = func(x+2.0*Diffs.H_STEP)
+        f_mh = func(x-Diffs.H_STEP)
+        f_m2h = func(x-2.0*Diffs.H_STEP)
+
+        return (f_2h-4.0*f_h+6.0*f_x-4.0*f_mh+f_m2h)/(np.power(Diffs.H_STEP, 4))
 
     @staticmethod
     def runge_kutta_4(func: "Functions", alpha: float, interval: tuple) -> "list[float]":
