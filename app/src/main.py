@@ -39,10 +39,7 @@ def main():
     plotter.plot_tuple(integration_tuple)
 
     # maths.Diffs.runge_kutta_4(maths.Functions.yp_t_y, 0.5, (0, 2))
-    print(maths.Diffs.d1f_x(maths.Functions.e_x, 1))
-    print(maths.Diffs.d2f_x(maths.Functions.e_x, 1))
-    print(maths.Diffs.d3f_x(maths.Functions.e_x, 1))
-    print(maths.Diffs.d4f_x(maths.Functions.e_x, 1))
+    maths.Utils.taylor_series(maths.Functions.e_x, 1, 0)
 
 
 if __name__ == "__main__":
