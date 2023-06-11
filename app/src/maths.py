@@ -48,6 +48,51 @@ class Functions:
         return exp
 
 
+class Diffs:
+    """
+    - A class that contains different implementation for numerical differentiation
+    """
+    N_INTERVALS = 5
+
+    @staticmethod
+    def runge_kutta_4(func: "Functions", alpha: float, interval: tuple) -> float:
+        """
+        - numerical implementation for the Runge-Kutta method of order 4
+        - requires an initial value for the function `func` at x=x_0, here denoted by `alpha`
+        - the interval starts at x_0=a and ends at x_n=b
+        """
+        debug = True
+
+        a, b = interval
+
+        if debug:
+            print(
+                f'Evaluating the numerical derivative of < {func} > between a={a} and b={b}')
+
+        x_data = np.linspace(a, b, Diffs.N_INTERVALS)
+        step = x_data[1]-x_data[0]
+        if debug:
+            print(f'Using a step size h={step}')
+
+        w_values = []
+
+        for idx in range(len(x_data)):
+            # this is for the step x=x_0=a
+            if idx == 0:
+                t_i = x_data[0]
+                w_i = alpha
+                w_values.append(w_i)
+            # this is for the other values of x over the interval [a,b]
+            else:
+                t_i = x_data[idx]
+                w_i = w_values[idx-1]+1
+                w_values.append(w_i)
+
+        print(w_values)
+
+        return 0.1
+
+
 class Integration:
 
     N_INTERVALS = 100

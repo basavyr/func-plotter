@@ -34,8 +34,11 @@ def plot_func_integral(func: "maths.Functions", interval: tuple, precision: int)
         DATA_DIR, f'f_vs_intf_{str(uuid.uuid4())[2:6]}.pdf')
     a, b = interval
 
-    print(
-        f'Plotting the function < {func} > and its integral over the interval [{a}, {b}]')
+    debug = False
+
+    if debug:
+        print(
+            f'Plotting the function < {func} > and its integral over the interval [{a}, {b}]')
 
     x_data = maths.np.linspace(a, b, precision)
 
@@ -64,8 +67,8 @@ def plot_tuple(input_tuple: "tuple(list,list,list)") -> None:
     plt.plot(x_data, f_x_data, '-r', label='f(x)')
     plt.plot(x_data, int_f_x_data, '*k', label=r'$F_n$')
     plt.legend(loc='best')
-    plt.xlabel(f'x')
-    plt.ylabel(f'N_X')
+    plt.xlabel('x')
+    plt.ylabel('N_X')
 
     plt.savefig(plot_name, dpi=300, bbox_inches='tight')
     plt.close()
