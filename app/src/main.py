@@ -34,11 +34,9 @@ def main():
 
     plotter.plot_func_integral(maths.Functions.special_sin, (-25, 25), 1000)
 
-    x, y, y2 = maths.Integration.scipy_quad(
+    integration_tuple = maths.Integration.scipy_quad(
         maths.Functions.special_sin, (0, 10))
-    print(x)
-    print(y)
-    print(y2)
+    plotter.plot_tuple(integration_tuple)
 
 
 if __name__ == "__main__":

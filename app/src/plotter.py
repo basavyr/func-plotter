@@ -49,3 +49,23 @@ def plot_func_integral(func: "maths.Functions", interval: tuple, precision: int)
     plt.xlabel('x')
     plt.savefig(plot_name, dpi=300, bbox_inches='tight')
     plt.close()
+
+
+def plot_tuple(input_tuple: "tuple(list,list,list)") -> None:
+    """
+    - create a graphical representation from a tuple of three lists
+    - first list is the set of x values, second list is the numerical values for f(x), and third list is the numerical integral of the function
+    """
+    plot_name = os.path.join(
+        DATA_DIR, f'integration_plot_{str(uuid.uuid4())[2:7]}.pdf')
+    # unpack the input tuple for proper plotting
+    x_data, f_x_data, int_f_x_data = input_tuple
+
+    plt.plot(x_data, f_x_data, '-r', label='f(x)')
+    plt.plot(x_data, int_f_x_data, '*k', label=r'$F_n$')
+    plt.legend(loc='best')
+    plt.xlabel(f'x')
+    plt.ylabel(f'N_X')
+
+    plt.savefig(plot_name, dpi=300, bbox_inches='tight')
+    plt.close()
