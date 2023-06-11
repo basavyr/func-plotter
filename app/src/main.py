@@ -34,6 +34,12 @@ def main():
 
     plotter.plot_func_integral(maths.Functions.special_sin, (-25, 25), 1000)
 
+    x, y, y2 = maths.Integration.scipy_quad(
+        maths.Functions.special_sin, (0, 10))
+    print(x)
+    print(y)
+    print(y2)
+
 
 if __name__ == "__main__":
     print("App is running...")

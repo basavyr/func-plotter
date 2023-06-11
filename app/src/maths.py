@@ -140,3 +140,34 @@ class Integration:
         trapezoidal_term = f_a+2*sum_i+f_b
 
         return trapezoidal_term*step/2
+
+    @staticmethod
+    def scipy_quad(func: "Functions", interval: tuple) -> "tuple(list, list, list)":
+        """
+        - uses the scipy quad method to evaluate the function and its numerical integral
+        - returns a tuple of lists, with the data points x, f(x) and int(f(x))
+        - uses by default 100 intervals for evaluation
+        """
+
+        debug = False
+
+        a, b = interval
+        n_points = 100
+        step = np.abs((b-a)/n_points)
+        x_data = np.linspace(a, b, n_points)
+        y_data = [func(x) for x in x_data]
+
+        int_data = []
+
+        for x in x_data:
+            int_f_x = integrate.quad(func, a, x)
+            int_data.append(int_f_x[0])
+
+        if (debug):
+            print(
+                f'Generated {len(x_data)} points for evaluation. x_0={x_data[0]}, x_1={x_data[1]}, ...')
+            print(f'Generated the numerical values for < {func} > f(x)')
+            print(
+                f'Generated the set of numerical values for the integral: {len(int_data)}')
+
+        return x_data, y_data, int_data
