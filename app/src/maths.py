@@ -1,7 +1,7 @@
 import numpy as np
 
 from scipy import integrate
-
+import math
 
 PI = np.pi
 
@@ -61,6 +61,61 @@ class Diffs:
     - A class that contains different implementation for numerical differentiation
     """
     N_INTERVALS = 5
+    H_STEP = 0.01
+
+    @staticmethod
+    def d1f_x(func: "Functions", arg: float) -> float:
+        """
+        - uses the Richardson extrapolation to determine the first order derivative of a function func(x)
+        """
+        x = arg
+        f_h = func(x+Diffs.H_STEP)
+        f_2h = func(x+2*Diffs.H_STEP)
+        f_mh = func(x-Diffs.H_STEP)
+        f_m2h = func(x-2*Diffs.H_STEP)
+
+        return (-f_2h+8.0*f_h-8.0*f_mh+f_m2h)/(12.0*Diffs.H_STEP)
+
+    @staticmethod
+    def d2f_x(func: "Functions", arg: float) -> float:
+        """
+        - uses the five-point formula to determine the second order derivative of a function func(x)
+        """
+        x = arg
+        f_x = func(x)
+        f_h = func(x+Diffs.H_STEP)
+        f_2h = func(x+2*Diffs.H_STEP)
+        f_mh = func(x-Diffs.H_STEP)
+        f_m2h = func(x-2*Diffs.H_STEP)
+
+        return (-f_2h+16.0*f_h-30.0*f_x+16.0*f_mh-f_m2h)/(12.0*np.power(Diffs.H_STEP, 2))
+
+    @staticmethod
+    def d3f_x(func: "Functions", arg: float) -> float:
+        """
+        - uses the five-point formula to determine the third order derivative of a function func(x)
+        """
+        x = arg
+        f_h = func(x+Diffs.H_STEP)
+        f_2h = func(x+2.0*Diffs.H_STEP)
+        f_mh = func(x-Diffs.H_STEP)
+        f_m2h = func(x-2.0*Diffs.H_STEP)
+
+        return (f_2h-2.0*f_h+2.0*f_mh-f_m2h)/(2.0*np.power(Diffs.H_STEP, 3))
+
+    @staticmethod
+    def d4f_x(func: "Functions", arg: float) -> float:
+        """
+        - uses the five-point formula to determine the fourth order derivative of a function func(x)
+        """
+        x = arg
+        f_x = func(x)
+        f_h = func(x+Diffs.H_STEP)
+        f_2h = func(x+2.0*Diffs.H_STEP)
+        f_mh = func(x-Diffs.H_STEP)
+        f_m2h = func(x-2.0*Diffs.H_STEP)
+
+        return (f_2h-4.0*f_h+6.0*f_x-4.0*f_mh+f_m2h)/(np.power(Diffs.H_STEP, 4))
 
     @staticmethod
     def runge_kutta_4(func: "Functions", alpha: float, interval: tuple) -> "list[float]":
@@ -227,3 +282,36 @@ class Integration:
                 f'Generated the set of numerical values for the integral: {len(int_data)}')
 
         return x_data, y_data, int_data
+
+
+class Utils:
+    """
+    - a collection of useful Mathematical tools that can be performed on functions with multiple arguments
+    """
+
+    @staticmethod
+    def x_power_k(x: float, x_0: float, k: int) -> float:
+        """
+        - evaluates the (x-x_0) raised to power k
+        """
+        delta = x-x_0
+        return np.power(delta, k)
+
+    @staticmethod
+    def taylor_k_term(func: "Functions", x: float, x_0: float, k: int) -> float:
+        """
+        - returns the k-th term in the Taylor series expansion
+        """
+        return Utils.x_power_k(x, x_0, k)/math.factorial(k)
+
+    @staticmethod
+    def taylor_series(func: "Functions", x: float, x_0: float) -> float:
+        """
+        - evaluates the Taylor series expansion, up to 4th order for a function `func`
+        """
+        t_0 = Utils.taylor_k_term(func, x, x_0, 0)
+        t_1 = Utils.taylor_k_term(func, x, x_0, 1)
+        t_2 = Utils.taylor_k_term(func, x, x_0, 2)
+        t_3 = Utils.taylor_k_term(func, x, x_0, 3)
+        t_4 = Utils.taylor_k_term(func, x, x_0, 4)
+        print(t_1, t_2, t_3, t_4)
